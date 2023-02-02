@@ -2,4 +2,4 @@ hi~
 This is a txt file for first time to test git!
 
 
-test commit 2
+test commit 3
