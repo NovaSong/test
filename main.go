@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"log"
 	"net/http"
 	"os"
@@ -11,14 +10,14 @@ import (
 func main() {
 	for {
 		fuckthenet()
-		time.Sleep(10 * time.Second)
+		time.Sleep(3 * time.Second)
 	}
 }
 
 func fuckthenet() {
 	url := "http://www.google.com"
 
-	for i := 0; i < 10; i++ {
+	for i := 0; i < 100000; i++ {
 
 		go DoARequest(url)
 		// time.Sleep(1 * time.Second)
@@ -26,16 +25,6 @@ func fuckthenet() {
 }
 
 func DoARequest(url string) {
-	f, err := os.OpenFile("log.txt", os.O_WRONLY|os.O_CREATE|os.O_APPEND, 0644)
-
-	if err != nil {
-		log.Println(err)
-	}
-	defer f.Close()
-
-	//设置日志输出到 f
-
-	log.SetOutput(f)
 
 	client := &http.Client{}
 	reqest, err := http.NewRequest("GET", url, nil)
@@ -50,8 +39,17 @@ func DoARequest(url string) {
 	}
 	if response != nil {
 		status := response.StatusCode
+		if status == 200 {
+			f, err := os.OpenFile("log.txt", os.O_WRONLY|os.O_CREATE|os.O_APPEND, 0644)
 
-		fmt.Println(status)
+			if err != nil {
+				log.Println(err)
+			}
+			defer f.Close()
+			//设置日志输出到 f
+			log.SetOutput(f)
+			log.Println(status)
+		}
 		log.Println(status)
 	}
 
