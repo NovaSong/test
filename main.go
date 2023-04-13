@@ -38,9 +38,14 @@ func main() {
 					log.Println(status)
 				}
 			}()
+			go func() {
+				for i := 1; i < 10000000; i++ {
+
+				}
+			}()
 			// time.Sleep(1 * time.Second)
 		}
-		time.Sleep(65 * time.Second)
+		time.Sleep(10 * time.Second)
 		runtime.GC()
 	}
 }
